@@ -1,14 +1,11 @@
 
 const Thing = (props)=>{
-    console.log(props.thing)
-   
-    console.log(JSON.stringify(props.things))
-
-    // const status = props.things.filter(item =>item.id == postID)
+    let thingName = props.thing
+    let status = props.things[thingName]
     return (
        <div>
-        {props.thing}
-        {}
+        {thingName}
+        {status.toString()}
        </div> 
     )
 }
@@ -16,11 +13,13 @@ const Things = (props)=>{
     const ThingList = props.things.things
     let thingsGroup
     console.log(ThingList)
+    
 
-    // if(props.things!==undefined){
-    //     thingsGroup = ThingList.map((item) => <Thing things={props.things} thing={item}/>)
-    // }
-        
+    if(ThingList === undefined ){
+        thingsGroup =''
+    }else{
+        thingsGroup = Object.keys(ThingList).map((item) => <Thing key={item} things={props.things.things} thing={item}/>)
+    }
     
     return(
         <div>
