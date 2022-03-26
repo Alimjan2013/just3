@@ -26,7 +26,7 @@ module.exports = {
         1: '#FFFFFF',
       },
       'green':{
-        1:'#00B42A'
+        1:'#B5FF92'
       },
       
       // ...

@@ -1,10 +1,9 @@
 import React ,{useState,useEffect} from 'react'
 import Things from './components/things';
-
+import './index.css';
 
 const App = ()=>{
   const [things,setThings] =useState({})
-
   const findThings =(user_id)=>{
     
     fetch('https://qcuud7.api.cloudendpoint.cn/findThing',{
@@ -17,8 +16,7 @@ const App = ()=>{
         json=>{
           console.log(json.result)
           setThings(json.result[0])
-        })
-      
+        })    
   }
   useEffect(() => {
     findThings("Alimjan")
@@ -26,8 +24,7 @@ const App = ()=>{
   
   let todydate
   const date = new Date(things.date);
-  if(date.getMonth() !== NaN){
-    todydate = <div>
+  todydate = <div className='text-5xl text-center'>
               <div>
                 {date.getMonth()+1}
               </div>
@@ -35,11 +32,9 @@ const App = ()=>{
                 {date.getDate()}
               </div>
             </div> 
-  }
-   
 
   return(
-    <div>
+    <div className='space-y-20'>
       {todydate}
       <Things things={things}/>
     </div>
