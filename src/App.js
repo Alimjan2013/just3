@@ -61,7 +61,7 @@ const App = () => {
   let todydate;
   const date = new Date(things.date);
   todydate = (
-    <div className="text-5xl text-center">
+    <div className="text-5xl text-center flex-1">
       <div>
         {date.getMonth() + 1 < 10
           ? `0${(date.getMonth() + 1).toString()}`
@@ -80,7 +80,7 @@ const App = () => {
   }
 
   return (
-    <div className="space-y-20">
+    <div className="h-screen space-y-20 pb-32 pt-10 flex flex-col">
       {calendar}
       {todydate}
       <Things things={things} />

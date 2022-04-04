@@ -5,6 +5,7 @@ const Weekcalendar = (props) => {
     <ThingsInCalendar things={things} key={things._id} isExist={true} />
   ));
   // todo , 剩下的日期
+  // todo , 考虑本来没有创建的日子
   return (
     <div className="flex ">
       {oneWeekcalendar}
