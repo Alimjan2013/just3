@@ -1,15 +1,18 @@
 import ThingsInCalendar from "./thingsInCalendar";
 
 const Weekcalendar = (props) => {
+  const oneWeekcalendar = props.things.map((things) => (
+    <ThingsInCalendar things={things} key={things._id} isExist={true} />
+  ));
+  // todo , 剩下的日期
   return (
     <div className="flex ">
-      <ThingsInCalendar things={props.things} isExist={true} />
-      <ThingsInCalendar things={props.things} isExist={true} />
-      <ThingsInCalendar things={props.things} isExist={true} />
-      <ThingsInCalendar things={props.things} isExist={false} />
-      <ThingsInCalendar things={props.things} isExist={false} />
-      <ThingsInCalendar things={props.things} isExist={false} />
-      <ThingsInCalendar things={props.things} isExist={false} />
+      {oneWeekcalendar}
+      <ThingsInCalendar things={props.things[0]} isExist={false} />
+      <ThingsInCalendar things={props.things[0]} isExist={false} />
+      <ThingsInCalendar things={props.things[0]} isExist={false} />
+      <ThingsInCalendar things={props.things[0]} isExist={false} />
+      <ThingsInCalendar things={props.things[0]} isExist={false} />
     </div>
   );
 };
