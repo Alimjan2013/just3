@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Things from "./components/things";
 import Weekcalendar from "./components/calendar";
-import ThingsInCalendar from "./components/thingsInCalendar";
 import "./index.css";
 
 const App = () => {

@@ -490,6 +490,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 0.5rem;
 }
 
+.w-full {
+  width: 100%;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -593,6 +597,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-text-2 {
+  --tw-text-opacity: 1;
+  color: rgb(201 205 212 / var(--tw-text-opacity));
 }
 
 .checked\:bg-green-1:checked {
