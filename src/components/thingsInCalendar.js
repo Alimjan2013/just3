@@ -68,7 +68,7 @@ const ThingsInCalendar = (props) => {
   const dayInMonth = date.getDate();
 
   return (
-    <div className="flex flex-col  items-center p-1 space-y-1">
+    <div className="flex flex-col  items-center p-1 space-y-1 flex-1">
       <span className="text-xs">{WhatIsTodayInChinese(dayInAWeek)}</span>
       <span className="text-base">
         {dayInMonth < 10 ? `0${dayInMonth.toString()}` : dayInMonth}
