@@ -4,8 +4,12 @@ import Weekcalendar from "./components/calendar";
 import "./index.css";
 const getDayString = (date) => {
   const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
+  const month =
+    date.getMonth() + 1 < 10
+      ? `0${(date.getMonth() + 1).toString()}`
+      : date.getMonth() + 1;
+  const day =
+    date.getDate() < 10 ? `0${date.getDate().toString()}` : date.getDate();
   return { year: year, month: month, day: day };
 };
 const getAWeek = () => {
@@ -13,10 +17,11 @@ const getAWeek = () => {
   const ADayInAWeek = Adate.getDay();
   Adate.setDate(Adate.getDate() - ADayInAWeek);
   const datestart = getDayString(Adate);
-  const trydateStart = `${datestart.year}-${datestart.month}-${datestart.day} 00:00:00+08`;
+  const trydateStart = `${datestart.year}-${datestart.month}-${datestart.day}T00:00:00`;
   const weekStart = new Date(trydateStart);
+
   const dateend = getDayString(new Date(Date.now()));
-  const trydateEnd = `${dateend.year}-${dateend.month}-${dateend.day} 23:59:59+08`;
+  const trydateEnd = `${dateend.year}-${dateend.month}-${dateend.day}T23:59:59`;
   const weekEnd = new Date(trydateEnd);
   return {
     start: weekStart,
@@ -41,7 +46,6 @@ const App = () => {
   };
   const findThingsWithRange = (user_id) => {
     const range = getAWeek();
-    console.log(range);
     fetch("https://qcuud7.api.cloudendpoint.cn/findThingInRange", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

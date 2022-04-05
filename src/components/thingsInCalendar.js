@@ -27,8 +27,6 @@ const WhatIsTodayInChinese = (number) => {
 
 const ThingsRing = (props) => {
   const status = props.status;
-  const bgc = status ? "green-1" : "fill-4";
-  console.log(bgc);
   return (
     <div
       className={
