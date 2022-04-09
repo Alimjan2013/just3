@@ -1,3 +1,15 @@
+const selectDateArray = (array) => {
+  let dateFromDB = [];
+
+  array.map((things) => {
+    const thingsDate = dayOfBegin(new Date(things.date));
+    dateFromDB.push(thingsDate);
+    return dateFromDB;
+  });
+  // console.log(dateFromDB);
+  return dateFromDB;
+};
+
 const dayOfBegin = (date) => {
   var datebegin = new Date(date);
   const year = date.getFullYear();
@@ -38,7 +50,7 @@ const getRangeArray = (range) => {
     let date;
     if (index === 0) {
       date = range.start;
-      console.log(date);
+      // console.log(date);
       rangeArray.push(date);
       // return;
     } else {
@@ -51,9 +63,32 @@ const getRangeArray = (range) => {
   return rangeArray;
 };
 
-const today = new Date("2022-9-12");
-const range = weekrange(today);
-console.log(range);
-console.log(weekBeforeTodayRange(today));
+const compareTwoArray = (rangeArray, dateFromDB) => {
+  let compareResults = [];
+  rangeArray.map((dateFromRange, index) => {
+    let status = false;
+    for (let i = 0; i < dateFromDB.length; i++) {
+      if (dateFromRange.getTime() === dateFromDB[i].getTime()) {
+        status = true;
+        break;
+      }
+    }
+    compareResults.push({ date: dateFromRange, status: status });
+    return compareResults;
+  });
+  console.log(compareResults);
 
-console.log(getRangeArray(range));
+  return compareResults;
+};
+
+const today = new Date("2022-04-09");
+// const range = weekrange(today);
+// const dateFromDB = selectDateArray(dataFromDB);
+// console.log(getRangeArray(range));
+// console.log(dateFromDB);
+// compareTwoArray(getRangeArray(range), dateFromDB);
+// selectDateArray(dataFromDB);
+// console.log(range);
+// console.log(weekBeforeTodayRange(today));
+
+// console.log(getRangeArray(range));
