@@ -34,7 +34,7 @@ const weekrange = (date) => {
   return { start: startDay, end: endDay };
 };
 
-const weekBeforeTodayRange = (date) => {
+export const weekBeforeTodayRange = (date) => {
   date = dayOfBegin(date);
   const startDay = weekrange(date).start;
   const endDay = new Date(date.setDate(date.getDate() + 1));
@@ -90,5 +90,5 @@ const today = new Date("2022-04-09");
 // selectDateArray(dataFromDB);
 // console.log(range);
 // console.log(weekBeforeTodayRange(today));
-
+// console.log(weekBeforeTodayRange(today));
 // console.log(getRangeArray(range));

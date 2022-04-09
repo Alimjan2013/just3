@@ -14,7 +14,7 @@
             "request": "launch",
             "name": "Launch Program",
             "skipFiles": ["<node_internals>/**"],
-            "program": "${workspaceFolder}/dateRange.js",
+            "program": "${workspaceFolder}/src/dateRange.js",
             "console":"internalConsole",
             "outputCapture":"std"
           }
