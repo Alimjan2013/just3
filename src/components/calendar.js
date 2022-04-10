@@ -1,49 +1,37 @@
 import ThingsInCalendar from "./thingsInCalendar";
-const getNextDayString = (date) => {
-  const year = date.getFullYear();
-  const month =
-    date.getMonth() + 1 < 10
-      ? `0${(date.getMonth() + 1).toString()}`
-      : date.getMonth() + 1;
-  const day =
-    date.getDate() < 10
-      ? `0${(date.getDate() + 1).toString()}`
-      : date.getDate();
-  return { year: year, month: month, day: day };
+import { getRangeArray, compareTwoArray } from "../dateRange";
+
+const today = new Date(Date.now());
+
+const combinedThings = (weekArray, thingsArray) => {
+  weekArray.map((day, index) => {
+    if (day.status) {
+      const things = thingsArray.filter(
+        (item) => new Date(item.date).getDate() === new Date(day.date).getDate()
+      );
+      day.things = things[0].things;
+      day.key = things[0]._id;
+    } else {
+      day.key = index;
+    }
+
+    return weekArray;
+  });
+  return weekArray;
 };
 
 const Weekcalendar = (props) => {
-  const oneWeekcalendar = props.things.map((things) => (
-    <ThingsInCalendar things={things} key={things._id} isExist={true} />
+  let weekArray = compareTwoArray(getRangeArray(today), props.things);
+  weekArray = combinedThings(weekArray, props.things);
+  const oneWeekcalendar = weekArray.map((day, index) => (
+    <ThingsInCalendar
+      date={day.date}
+      things={day.things}
+      key={day.key}
+      isExist={day.status}
+    />
   ));
-
-  // todo , 考虑本来没有创建的日子
-  const lefeDays = [];
-  for (let i = 0; i < 7 - props.things.length; i++) {
-    let date;
-    if (i === 0) {
-      date = props.things[props.things.length - 1].date;
-    } else {
-      date = lefeDays[lefeDays.length - 1].date;
-    }
-    let dataString = getNextDayString(new Date(date));
-    const trydateStart = `${dataString.year}-${dataString.month}-${dataString.day}T00:00:00`;
-    date = new Date(trydateStart);
-    const things = {
-      date: date,
-    };
-    lefeDays.push(things);
-  }
-  const leftDaysInWeekcalendar = lefeDays.map((things, index) => (
-    <ThingsInCalendar things={things} key={index} isExist={false} />
-  ));
-
-  return (
-    <div className="flex ">
-      {oneWeekcalendar}
-      {leftDaysInWeekcalendar}
-    </div>
-  );
+  return <div className="flex ">{oneWeekcalendar}</div>;
 };
 
 export default Weekcalendar;

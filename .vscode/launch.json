@@ -3,22 +3,21 @@
     // 悬停以查看现有属性的描述。
     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
+    
+    
     "configurations": [
+
+    
+        
         {
-            "type": "pwa-chrome",
+            "type":"node",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "name": "SWA: Run just3",
-            "request": "launch",
-            "type": "pwa-chrome",
-            "url": "http://localhost:4280",
-            "preLaunchTask": "swa: start just3",
-            "webRoot": "${workspaceFolder}/",
-            "timeout": 30000
-        }
+            "name": "Launch Program",
+            "skipFiles": ["<node_internals>/**"],
+            "program": "${workspaceFolder}/src/dateRange.js",
+            "console":"internalConsole",
+            "outputCapture":"std"
+          }
+        
     ]
 }

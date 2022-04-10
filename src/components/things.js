@@ -29,7 +29,6 @@ const Thing = (props) => {
 const Things = (props) => {
   const ThingList = props.things.things;
   let thingsGroup;
-  console.log(ThingList);
   const changestatus = (key, status) => {
     console.log(status);
     console.log();

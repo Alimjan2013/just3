@@ -53,7 +53,7 @@ const ThingsRingGroup = (props) => {
 };
 
 const ThingsInCalendar = (props) => {
-  const date = new Date(props.things.date);
+  const date = new Date(props.date);
   const dayInAWeek = date.getDay();
   const dayInMonth = date.getDate();
   const status = { a: false, b: false, c: false };
@@ -65,7 +65,7 @@ const ThingsInCalendar = (props) => {
         <span className="text-base">
           {dayInMonth < 10 ? `0${dayInMonth.toString()}` : dayInMonth}
         </span>
-        <ThingsRingGroup thingsDetails={props.things.things} />
+        <ThingsRingGroup thingsDetails={props.things} />
       </div>
     );
   } else {
