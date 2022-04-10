@@ -42,7 +42,8 @@ export const weekBeforeTodayRange = (date) => {
   return { start: startDay, end: endDay };
 };
 
-const getRangeArray = (range) => {
+export const getRangeArray = (date) => {
+  const range = weekrange(date);
   var rangeDays = (range.end - range.start) / 1000 / 60 / 60 / 24;
   rangeDays = Math.ceil(rangeDays);
   const rangeArray = [];
@@ -63,7 +64,8 @@ const getRangeArray = (range) => {
   return rangeArray;
 };
 
-const compareTwoArray = (rangeArray, dateFromDB) => {
+export const compareTwoArray = (rangeArray, dataFromDB) => {
+  const dateFromDB = selectDateArray(dataFromDB);
   let compareResults = [];
   rangeArray.map((dateFromRange, index) => {
     let status = false;
@@ -76,7 +78,7 @@ const compareTwoArray = (rangeArray, dateFromDB) => {
     compareResults.push({ date: dateFromRange, status: status });
     return compareResults;
   });
-  console.log(compareResults);
+  // console.log(compareResults);
 
   return compareResults;
 };

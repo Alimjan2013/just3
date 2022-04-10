@@ -15,7 +15,6 @@ const App = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.result);
         setThings(json.result[0]);
       });
   };
@@ -32,7 +31,6 @@ const App = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.result);
         setThingsInAWeek(json.result);
       });
   };
