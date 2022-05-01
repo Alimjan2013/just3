@@ -27,7 +27,7 @@ const Thing = (props) => {
   );
 };
 const Things = (props) => {
-  const ThingList = props.things.things;
+  const ThingList = props.things.ThreeThings;
   let thingsGroup;
   const changestatus = (key, status) => {
     console.log(status);
@@ -53,7 +53,7 @@ const Things = (props) => {
     thingsGroup = Object.keys(ThingList).map((item) => (
       <Thing
         key={item}
-        things={props.things.things}
+        things={props.things.ThreeThings}
         thing={item}
         changestatus={changestatus.bind()}
       />
