@@ -85,6 +85,7 @@ const App = () => {
         "https://rxvkdzbhzca45kuqjd3ein6sea0vhido.lambda-url.ap-east-1.on.aws/",
         {
           userID: userId,
+          type: "findTodayThings",
         },
         {
           headers: {

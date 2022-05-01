@@ -32,18 +32,23 @@ const Things = (props) => {
   const changestatus = (key, status) => {
     console.log(status);
     console.log();
-    fetch("https://qcuud7.api.cloudendpoint.cn/updateThing", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id: props.things._id,
-        thingName: key,
-        status: status,
-      }),
-    })
+    fetch(
+      "https://rxvkdzbhzca45kuqjd3ein6sea0vhido.lambda-url.ap-east-1.on.aws/",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "update",
+          userID: props.things.userID,
+          CreatDate: props.things.CreatDate,
+          ThingName: key,
+          ThingStatus: status,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.test);
+        console.log(json);
       });
   };
 
