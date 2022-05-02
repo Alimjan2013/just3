@@ -2,7 +2,7 @@ const selectDateArray = (array) => {
   let dateFromDB = [];
 
   array.map((things) => {
-    const thingsDate = dayOfBegin(new Date(things.date));
+    const thingsDate = dayOfBegin(new Date(things.CreatDate));
     dateFromDB.push(thingsDate);
     return dateFromDB;
   });

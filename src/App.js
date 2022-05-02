@@ -103,20 +103,25 @@ const App = () => {
         // 请求失败
       });
   };
+
   const findThingsWithRange = (user_id) => {
     const today = new Date(Date.now());
     const range = weekBeforeTodayRange(today);
-    fetch("https://qcuud7.api.cloudendpoint.cn/findThingInRange", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: user_id,
-        range: range,
-      }),
-    })
+    fetch(
+      "https://rxvkdzbhzca45kuqjd3ein6sea0vhido.lambda-url.ap-east-1.on.aws/",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userID: user_id,
+          timeRange: range,
+          type: "range",
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((json) => {
-        setThingsInAWeek(json.result);
+        setThingsInAWeek(json);
       });
   };
   useEffect(() => {
