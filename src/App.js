@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Things from "./components/things";
-import Weekcalendar from "./components/calendar";
+import WeekView from "./components/calendar";
 import { weekBeforeTodayRange } from "./dateRange.js";
 import "./index.css";
 import axios from "axios";
@@ -77,7 +77,8 @@ const App = () => {
   if (thingsInAWeek.length === 0) {
     calendar = "";
   } else {
-    calendar = <Weekcalendar things={thingsInAWeek} />;
+    // calendar = <Weekcalendar things={thingsInAWeek} />;
+    calendar = <WeekView things={thingsInAWeek} />;
   }
 
   return (

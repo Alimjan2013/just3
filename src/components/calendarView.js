@@ -8,7 +8,6 @@ const DayAtom = (props) => {
   }
   let isToday = false;
   let today = new Date(Date.now()).getDate();
-  console.log(date === today);
   if (date === today) {
     isToday = true;
     status = true;
