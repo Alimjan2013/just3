@@ -1,79 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Things from "./components/things";
-import Weekcalendar from "./components/calendar";
+import WeekView from "./components/calendar";
 import { weekBeforeTodayRange } from "./dateRange.js";
 import "./index.css";
 import axios from "axios";
-import { nanoid } from "nanoid/non-secure";
-const serviceId = "qcuud7";
-
-const Login = () => {
-  const [phoneNumber, usePhoneNumber] = useState("18958088769");
-
-  const getPhoneCode = (phoneNumber) => {
-    const localSessionKey = `light:${serviceId}:local-session`;
-    if (!localStorage.getItem(localSessionKey)) {
-      // 如果本地没有 token，则随机生成
-      localStorage.setItem(localSessionKey, nanoid());
-    }
-    axios
-      .post(
-        "https://qcuud7.api.cloudendpoint.cn/login",
-        {
-          type: "getPhoneCode",
-          phoneNumber: phoneNumber, // 发送用户的手机号作为参数
-        },
-        {
-          headers: {
-            // 请求头中需要设置 x-tt-session-v2，才能在服务端使用用户系统
-            "x-tt-session-v2": localStorage.getItem(localSessionKey),
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        // 请求成功
-      })
-      .catch((err) => {
-        console.log(err);
-        // 请求失败
-      });
-  };
-
-  const loginWithPhoneCode = (code) => {
-    const localSessionKey = `light:${serviceId}:local-session`;
-    axios
-      .post(
-        "https://qcuud7.api.cloudendpoint.cn/login",
-        {
-          type: "login",
-          phoneNumber: phoneNumber,
-          code: code, // 发送用户的手机号作为参数
-        },
-        {
-          headers: {
-            // 请求头中需要设置 x-tt-session-v2，才能在服务端使用用户系统
-            "x-tt-session-v2": localStorage.getItem(localSessionKey),
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        // 请求成功
-      })
-      .catch((err) => {
-        console.log(err);
-        // 请求失败
-      });
-  };
-
-  return (
-    <div>
-      <button onClick={() => getPhoneCode(phoneNumber)}> 获取验证码 </button>
-      <input></input>
-    </div>
-  );
-};
 
 const App = () => {
   const [things, setThings] = useState({});
@@ -147,7 +77,8 @@ const App = () => {
   if (thingsInAWeek.length === 0) {
     calendar = "";
   } else {
-    calendar = <Weekcalendar things={thingsInAWeek} />;
+    // calendar = <Weekcalendar things={thingsInAWeek} />;
+    calendar = <WeekView things={thingsInAWeek} />;
   }
 
   return (
@@ -155,7 +86,6 @@ const App = () => {
       {calendar}
       {todaydate}
       <Things things={things} />
-      <Login />
     </div>
   );
 };
