@@ -1,5 +1,6 @@
 import ThingsInCalendar from "./thingsInCalendar";
 import { getRangeArray, compareTwoArray } from "../dateRange";
+import DayView from "./calendarView";
 
 const today = new Date(Date.now());
 
@@ -25,11 +26,11 @@ const Weekcalendar = (props) => {
   let weekArray = compareTwoArray(getRangeArray(today), props.things);
   weekArray = combinedThings(weekArray, props.things);
   const oneWeekcalendar = weekArray.map((day, index) => (
-    <ThingsInCalendar
-      date={day.date}
+    <DayView
+      status={day.status}
       things={day.things}
+      date={day.date}
       key={day.key}
-      isExist={day.status}
     />
   ));
   return <div className="flex ">{oneWeekcalendar}</div>;
