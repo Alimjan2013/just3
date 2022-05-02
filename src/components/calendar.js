@@ -7,10 +7,11 @@ const combinedThings = (weekArray, thingsArray) => {
   weekArray.map((day, index) => {
     if (day.status) {
       const things = thingsArray.filter(
-        (item) => new Date(item.date).getDate() === new Date(day.date).getDate()
+        (item) =>
+          new Date(item.CreatDate).getDate() === new Date(day.date).getDate()
       );
-      day.things = things[0].things;
-      day.key = things[0]._id;
+      day.things = things[0].ThreeThings;
+      day.key = things[0].CreatDate;
     } else {
       day.key = index;
     }
