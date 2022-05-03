@@ -1,6 +1,12 @@
-import ThingsInCalendar from "./thingsInCalendar";
 import { getRangeArray, compareTwoArray } from "../dateRange";
 import DayView from "./calendarView";
+import { weekBeforeTodayRange } from "../dateRange";
+import { useState, useEffect } from "react";
+
+import { atom } from "jotai";
+import { useAtom } from "jotai";
+
+const weekRanges = atom([]);
 
 const today = new Date(Date.now());
 
@@ -40,7 +46,7 @@ const Weekcalendar = (props) => {
   );
 };
 
-export const WeekView = (props) => {
+const WeekView = (props) => {
   const calendar = <Weekcalendar things={props.things} />;
   const weekName = ["日", "一", "二", "三", "四", "五", "六"];
   const NameOfWeek = weekName.map((name, index) => (
@@ -51,7 +57,7 @@ export const WeekView = (props) => {
 
   return (
     <div className="space-y-2 flex flex-col items-center">
-      <div className="flex w-full items-center">
+      <div className="flex w-full items-center px-2">
         <svg
           width="24"
           height="24"
@@ -59,13 +65,13 @@ export const WeekView = (props) => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <rect width="48" height="48" fill="white" fill-opacity="0.01" />
+          <rect width="48" height="48" fill="white" fillOpacity="0.01" />
           <path
             d="M31 36L19 24L31 12"
             stroke="#333"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
         <div className="space-y-1 flex-1">
@@ -81,13 +87,13 @@ export const WeekView = (props) => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <rect width="48" height="48" fill="white" fill-opacity="0.01" />
+          <rect width="48" height="48" fill="white" fillOpacity="0.01" />
           <path
             d="M19 12L31 24L19 36"
             stroke="#333"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </div>
@@ -97,4 +103,40 @@ export const WeekView = (props) => {
   );
 };
 
-export default WeekView;
+const CalendarView = () => {
+  const [thingsInAWeek, setThingsInAWeek] = useState([]);
+
+  const findThingsWithRange = (user_id) => {
+    const today = new Date(Date.now());
+    const range = weekBeforeTodayRange(today);
+    fetch(
+      "https://rxvkdzbhzca45kuqjd3ein6sea0vhido.lambda-url.ap-east-1.on.aws/",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userID: user_id,
+          timeRange: range,
+          type: "range",
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        setThingsInAWeek(json);
+      });
+  };
+  useEffect(() => {
+    findThingsWithRange("Alimjan");
+  }, []);
+
+  let calendar;
+  if (thingsInAWeek.length === 0) {
+    calendar = "";
+  } else {
+    calendar = <WeekView things={thingsInAWeek} />;
+  }
+  return <div>{calendar}</div>;
+};
+
+export default CalendarView;

@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Things from "./components/things";
-import WeekView from "./components/calendar";
-import { weekBeforeTodayRange } from "./dateRange.js";
+import CalendarView from "./components/calendar";
 import "./index.css";
 import axios from "axios";
 
 const App = () => {
   const [things, setThings] = useState({});
-  const [thingsInAWeek, setThingsInAWeek] = useState([]);
 
   const findThings = (userId) => {
     axios
@@ -34,29 +32,8 @@ const App = () => {
       });
   };
 
-  const findThingsWithRange = (user_id) => {
-    const today = new Date(Date.now());
-    const range = weekBeforeTodayRange(today);
-    fetch(
-      "https://rxvkdzbhzca45kuqjd3ein6sea0vhido.lambda-url.ap-east-1.on.aws/",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userID: user_id,
-          timeRange: range,
-          type: "range",
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        setThingsInAWeek(json);
-      });
-  };
   useEffect(() => {
     findThings("Alimjan");
-    findThingsWithRange("Alimjan");
   }, []);
 
   let todaydate;
@@ -73,17 +50,10 @@ const App = () => {
       </div>
     </div>
   );
-  let calendar;
-  if (thingsInAWeek.length === 0) {
-    calendar = "";
-  } else {
-    // calendar = <Weekcalendar things={thingsInAWeek} />;
-    calendar = <WeekView things={thingsInAWeek} />;
-  }
 
   return (
     <div className="h-screen space-y-20 pb-32 pt-10 flex flex-col">
-      {calendar}
+      <CalendarView />
       {todaydate}
       <Things things={things} />
     </div>
