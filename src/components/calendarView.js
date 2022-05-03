@@ -1,5 +1,6 @@
 const DayAtom = (props) => {
   const date = new Date(props.date).getDate();
+  const month = new Date(props.date).getMonth();
   let status = props.status;
   //   console.log(status);
   let isBeginOfMouth = false;
@@ -8,7 +9,9 @@ const DayAtom = (props) => {
   }
   let isToday = false;
   let today = new Date(Date.now()).getDate();
-  if (date === today) {
+  let thisMonth = new Date(Date.now()).getMonth();
+
+  if ((date === today) & (month === thisMonth)) {
     isToday = true;
     status = true;
   }

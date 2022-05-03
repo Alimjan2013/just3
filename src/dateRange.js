@@ -23,7 +23,7 @@ const dayOfBegin = (date) => {
   return datebegin;
 };
 
-const weekrange = (date) => {
+export const weekrange = (date) => {
   date = dayOfBegin(date);
   const dayOfWeek = date.getDay();
   var startDay = new Date(date);
