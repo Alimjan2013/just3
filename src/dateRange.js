@@ -63,6 +63,44 @@ export const getRangeArray = (date) => {
 
   return rangeArray;
 };
+export const getRangeArrayNano = (range) => {
+  console.log(range);
+  var rangeDays = (range.end - range.start) / 1000 / 60 / 60 / 24;
+  rangeDays = Math.ceil(rangeDays);
+  const rangeArray = [];
+  for (let index = 0; index < rangeDays; index++) {
+    let date;
+    if (index === 0) {
+      date = range.start;
+      // console.log(date);
+      rangeArray.push(date);
+      // return;
+    } else {
+      date = new Date(rangeArray[rangeArray.length - 1]);
+      date.setDate(date.getDate() + 1);
+      rangeArray.push(date);
+    }
+  }
+
+  return rangeArray;
+};
+export const getMonthArray = (date) => {
+  const day = new Date(date);
+  const month = day.getMonth() + 1;
+  const firstDayInMonth = new Date(`${day.getFullYear()}-${month}-01`);
+  const firstDayInNextMonth = new Date(`${day.getFullYear()}-${month + 1}-01`);
+  const lastDayInMonth = new Date(
+    firstDayInNextMonth.setDate(date.getDate() - 1)
+  );
+  lastDayInMonth.setSeconds(-1);
+  const startOfFirstDay = weekrange(firstDayInMonth).start;
+  const EndOfFirstDay = weekrange(lastDayInMonth).end;
+  // const monthArray = getRangeArrayNano();
+  return {
+    start: startOfFirstDay,
+    end: EndOfFirstDay,
+  };
+};
 
 export const compareTwoArray = (rangeArray, dataFromDB) => {
   const dateFromDB = selectDateArray(dataFromDB);
@@ -83,7 +121,7 @@ export const compareTwoArray = (rangeArray, dataFromDB) => {
   return compareResults;
 };
 
-const today = new Date("2022-04-09");
+// const today = new Date("2022-04-09");
 // const range = weekrange(today);
 // const dateFromDB = selectDateArray(dataFromDB);
 // console.log(getRangeArray(range));
