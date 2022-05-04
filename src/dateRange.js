@@ -86,9 +86,18 @@ export const getRangeArrayNano = (range) => {
 };
 export const getMonthArray = (date) => {
   const day = new Date(date);
-  const month = day.getMonth() + 1;
+  const month =
+    day.getMonth() + 1 < 10
+      ? `0${(day.getMonth() + 1).toString()}`
+      : day.getMonth() + 1;
+
+  const nextMonth =
+    day.getMonth() + 2 < 10
+      ? `0${(day.getMonth() + 2).toString()}`
+      : day.getMonth() + 2;
+
   const firstDayInMonth = new Date(`${day.getFullYear()}-${month}-01`);
-  const firstDayInNextMonth = new Date(`${day.getFullYear()}-${month + 1}-01`);
+  const firstDayInNextMonth = new Date(`${day.getFullYear()}-${nextMonth}-01`);
   const lastDayInMonth = new Date(
     firstDayInNextMonth.setDate(date.getDate() - 1)
   );
