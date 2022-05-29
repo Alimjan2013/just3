@@ -23,13 +23,17 @@ def getDateRange(Onedate, mode):
 
     def getMonthRange(Onedate):
         # 每月最后一天的获取方法：获取下一月的一号，再减一天
+        # 输入一个日期
+        # 返回这个日期所在月再日历中的日期列表，包括第一周包含上个月的日期和最后一周包含的下个月的开始
         year = Onedate.year
         mounth = Onedate.month
-        start = date(year, mounth, 1)
+        firstDayInMonth = date(year, mounth, 1)
+        start = getWeekRange(firstDayInMonth)['start']
         if(mounth < 12):
-            end = date(year, mounth+1, 1) - timedelta(days=1)
+            lastDayInMonth = date(year, mounth+1, 1) - timedelta(days=1)
         else:
-            end = date(year+1, 1, 1) - timedelta(days=1)
+            lastDayInMonth = date(year+1, 1, 1) - timedelta(days=1)
+        end = getWeekRange(lastDayInMonth)['end']
         return {'start': start, 'end': end}
 
     if(mode == 'week'):
