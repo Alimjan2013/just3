@@ -1,7 +1,7 @@
+# 本代码运行在Lambda上
 from datetime import date
 from datetime import timedelta
 import json
-from tracemalloc import start
 import requests
 
 
@@ -57,8 +57,11 @@ def getDateRange(Onedate, mode):
 
 
 def getThingsFromDB(range, userID):
+    # 输入时间范围与要查询的用户信息
+    # 返回数据库中记录的Things信息数组
     start = date.isoformat(range['start'])
     end = date.isoformat(range['end'])
+    # 数据库查询需要iso格式的时间字符串
     url = 'https://rxvkdzbhzca45kuqjd3ein6sea0vhido.lambda-url.ap-east-1.on.aws/'
     values = {
         "userID": userID,
@@ -68,12 +71,24 @@ def getThingsFromDB(range, userID):
             "end": end
         },
     }
-
     headers = {'Content-Type': 'application/json'}
     thingsFromDB = requests.post(url=url, data=json.dumps(
         values), headers=headers).json()
-
     return thingsFromDB
+
+
+def creatDateArrayWithRange(range):
+    # 输入range
+    # 返回用此range生成的列表
+
+    rangeDays = (range['end'] - range['start']).days
+
+    rangeArray = [{'CreatDate': range['start']}, ]
+    i = 1
+    while i <= rangeDays:
+        rangeArray.append({'CreatDate': range['start']+timedelta(days=i)})
+        i = i+1
+    return rangeArray
 
 
 def DifferenceOfRange(Onedate, mode):
