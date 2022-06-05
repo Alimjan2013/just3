@@ -125,19 +125,26 @@ def compareTowArray(emptyRangeArray, ThingsArrayFromDB):
             emptyArrayCopy[index]['status'] = False
     return emptyArrayCopy
 
-# def initArray():
+
+def initDateArray(rangeArray):
+    rangeArrayCopy = rangeArray
+    for index, things in enumerate(rangeArray):
+        rangeArrayCopy[index]['CreatDate'] = date.isoformat(
+            things['CreatDate'])
+    return rangeArrayCopy
 
 
-def DifferenceOfRange(Onedate, mode):
+def thingsArrayInCalendar(Onedate, mode):
     # 提供一个日期和mode（周还是月）
-    # 返回所提供时长内每日的结果，如当日没有记录记为空
+    # 返回所提供时长内每日的结果，如当日没有记录记为false
     range = getDateRange(Onedate, mode)
     ThingsArrayFromDB = getThingsFromDB(range, userID)
     emptyRangeArray = creatDateArrayWithRange(range)
     DifferenceOfArray = compareTowArray(emptyRangeArray, ThingsArrayFromDB)
-    print(DifferenceOfArray)
-    return DifferenceOfArray
+    thingsInCalendar = initDateArray(DifferenceOfArray)
+    # print(json.dumps(thingsInCalendar))
+    return thingsInCalendar
 
 
 # 主函数入口
-DifferenceOfRange('2022-05-04', 'month')
+thingsArrayInCalendar('2022-06-05', 'week')
