@@ -91,16 +91,53 @@ def creatDateArrayWithRange(range):
     return rangeArray
 
 
+def compareTowArray(emptyRangeArray, ThingsArrayFromDB):
+
+    ArrayFromDBCopy = ThingsArrayFromDB
+    emptyArrayCopy = emptyRangeArray
+    # 初始化DB来的数据
+    for index, things in enumerate(ThingsArrayFromDB):
+        ArrayFromDBCopy[index]['CreatDate'] = date.fromisoformat(
+            things['CreatDate'][0:10])
+
+    # 二分查找法
+    def binary_search(list, item):
+        low = 0
+        hight = len(list)-1
+        while low <= hight:
+            mid = int((low + hight)/2)
+            guess = list[mid]['CreatDate']
+            if(guess == item):
+                return mid
+            if(guess > item):
+                hight = mid - 1
+            else:
+                low = mid+1
+        return -1
+
+    # 遍历空日期数组，与数据库的数组做比较，并找出差异
+    for index, things in enumerate(emptyRangeArray):
+        isExist = binary_search(ArrayFromDBCopy, things['CreatDate'])
+        if(isExist != -1):
+            emptyArrayCopy[index]['status'] = True
+            emptyArrayCopy[index]['things'] = ArrayFromDBCopy[isExist]['ThreeThings']
+        else:
+            emptyArrayCopy[index]['status'] = False
+    return emptyArrayCopy
+
+# def initArray():
+
+
 def DifferenceOfRange(Onedate, mode):
     # 提供一个日期和mode（周还是月）
     # 返回所提供时长内每日的结果，如当日没有记录记为空
     range = getDateRange(Onedate, mode)
     ThingsArrayFromDB = getThingsFromDB(range, userID)
     emptyRangeArray = creatDateArrayWithRange(range)
-    DifferenceOfArray = CompareTwoArray(emptyRangeArray, ThingsArrayFromDB)
+    DifferenceOfArray = compareTowArray(emptyRangeArray, ThingsArrayFromDB)
+    print(DifferenceOfArray)
     return DifferenceOfArray
 
 
 # 主函数入口
-DifferenceOfRange()
-initArray()
+DifferenceOfRange('2022-05-04', 'month')
