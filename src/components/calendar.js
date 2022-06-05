@@ -1,10 +1,4 @@
-import {
-  weekrange,
-  getRangeArray,
-  compareTwoArray,
-  getRangeArrayNano,
-  getMonthArray,
-} from "../dateRange";
+import { weekrange, getRangeArray, compareTwoArray } from "../dateRange";
 import DayView from "./calendarView";
 import { useState, useEffect } from "react";
 
@@ -60,15 +54,23 @@ const WeekView = (props) => {
     </div>
   );
 };
-const MonthView = (props) => {
-  const [thingsInAMonth, setThingsInAMonth] = useState([]);
+const MonthView = () => {
   const [monthViewArray, setMonthViewArray] = useState([]);
-  // console.log(getMonthArray(new Date(Date.now())));
-  const range = getMonthArray(new Date(Date.now()));
-  const monthRangeArray = getRangeArrayNano(range);
-  console.log(range);
-
-  const findThingsWithRange = (user_id, range) => {
+  const today = () => {
+    const day = new Date(Date.now());
+    const year = day.getFullYear();
+    const month =
+      day.getMonth() + 1 < 10
+        ? `0${(day.getMonth() + 1).toString()}`
+        : toString(day.getMonth() + 1);
+    const whichday =
+      day.getDate() < 10
+        ? `0${day.getDate().toString()}`
+        : toString(day.getDate());
+    console.log(`${year}-${month}-${whichday}`);
+    return `${year}-${month}-${whichday}`;
+  };
+  const findThingsWithRange = (user_id) => {
     console.log("我在从数据库获取数据");
     fetch(
       "https://rxvkdzbhzca45kuqjd3ein6sea0vhido.lambda-url.ap-east-1.on.aws/",
@@ -77,33 +79,30 @@ const MonthView = (props) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userID: user_id,
-          timeRange: range,
-          type: "range",
+          date: today(),
+          mode: "month",
+          type: "calendar",
         }),
       }
     )
       .then((res) => res.json())
       .then((json) => {
-        setThingsInAMonth(json);
-        let week = compareTwoArray(monthRangeArray, json);
-        setMonthViewArray(combinedThings(week, json));
+        // setThingsInAMonth(json);
+        // let week = compareTwoArray(monthRangeArray, json);
+        setMonthViewArray(json);
       });
   };
-  // findThingsWithRange("Alimjan", range);
 
-  // const calendar = (
-  //   <Weekcalendar things={props.things} weekArray={props.weekArray} />
-  // );
   useEffect(() => {
-    findThingsWithRange("Alimjan", range);
+    findThingsWithRange("Alimjan");
   }, []);
 
   const oneMonthcalendar = monthViewArray.map((day, index) => (
     <DayView
       status={day.status}
       things={day.things}
-      date={day.date}
-      key={day.key}
+      date={day.CreatDate}
+      key={day.CreatDate}
     />
   ));
   console
@@ -121,7 +120,7 @@ const MonthView = (props) => {
   ));
   return (
     <div className="space-y-1 flex-1">
-      <p className="text-center">五月</p>
+      <p className="text-center">{new Date(Date.now()).getMonth() + 1}月</p>
       <div className="grid gap-2 md:gap-4 xl:gap-6 grid-cols-7">
         {NameOfWeek}
       </div>
@@ -132,7 +131,7 @@ const MonthView = (props) => {
   );
 };
 
-const CalendarView = (props) => {
+const CalendarView = () => {
   const [aday, setAday] = useState(new Date(Date.now()));
   const changeRange = (day) => {
     return weekrange(day);
