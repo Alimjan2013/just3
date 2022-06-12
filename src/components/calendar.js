@@ -64,9 +64,7 @@ const MonthView = () => {
         ? `0${(day.getMonth() + 1).toString()}`
         : toString(day.getMonth() + 1);
     const whichday =
-      day.getDate() < 10
-        ? `0${day.getDate().toString()}`
-        : toString(day.getDate());
+      day.getDate() < 10 ? `0${day.getDate().toString()}` : day.getDate();
     console.log(`${year}-${month}-${whichday}`);
     return `${year}-${month}-${whichday}`;
   };
